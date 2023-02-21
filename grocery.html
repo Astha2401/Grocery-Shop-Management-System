@@ -100,3 +100,79 @@ btn-success" id = "btn" name = "btn">Log in</button>
  </div>
  </div>
  </div>
+  <!-- jQuery -->
+ <script src="../vendor/jquery/jquery.min.js"></script>
+ <!-- Bootstrap Core JavaScript -->
+ <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+ <!-- Metis Menu Plugin JavaScript -->
+ <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+ <!-- Custom Theme JavaScript -->
+ <script src="../dist/js/sb-admin-2.js"></script>
+ <script type="text/javascript">
+ jQuery(function(){
+ $('form[name="admin_form"]').on('submit', function(donard){
+ donard.preventDefault();
+ var a = $(this).find('input[name="username"]').val();
+ var b = $(this).find('input[name="pass"]').val();
+ if (a === '' && b ===''){
+ $('#alert-msg').html('<div class="alert alert-danger">All fields
+are required!</div>');
+ }else{
+ $.ajax({
+ type: 'POST',
+ url: 'new_login.php',
+ data: {
+ username: a,
+ password: b
+ },
+ beforeSend: function(){
+ $('#alert-msg').html('');
+ }
+ })
+ .done(function(donard){
+ if (donard == 0){
+ $('#alert-msg').html('<div class="alert alertdanger">Incorrect username or password!</div>');
+ }else{
+ $("#btn-login").html('<img src="loading.gif"
+/> &nbsp; Signing In ...');
+ setTimeout(' window.location.href =
+"home.php"; ',2000);
+ }
+ });
+ }
+ });
+ $('form[name="cashier_form"]').on('submit', function(donard){
+ donard.preventDefault();
+ var a = $(this).find('input[name="cashier_username"]').val();
+ var b = $(this).find('input[name="cashier_pass"]').val();
+ if (a === '' && b ===''){
+ $('#alert-msg1').html('<div class="alert alert-danger">All
+fields are required!</div>');
+ }else{
+ $.ajax({
+ type: 'POST',
+ url: 'cashier/new_login.php',
+ data: {
+ username: a,
+ password: b
+ },
+ beforeSend: function(){
+ $('#alert-msg1').html('');
+ }
+ })
+ .done(function(donard){
+ if (donard == 0){
+ $('#alert-msg1').html('<div class="alert alertdanger">Incorrect username or password!</div>');
+ }else{
+ $("#btn").html('<img src="loading.gif" />
+&nbsp; Signing In ...');
+ setTimeout(' window.location.href =
+"cashier/sales.php?id=cash&invoice=<?php echo $finalcode ?>"; ',2000);
+ }
+ });
+ }
+ });
+ });
+ </script>
+ </body>44
+ </html>
